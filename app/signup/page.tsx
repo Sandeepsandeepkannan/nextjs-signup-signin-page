@@ -1,11 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useRef } from "react"
 
 export default function Signuppage(){
 
        const nameref=useRef<HTMLInputElement>(null)
        const passwordref=useRef<HTMLInputElement>(null)
+       const router=useRouter()
     
     
       async function Sendsignupdata(){
@@ -16,9 +18,16 @@ export default function Signuppage(){
 
         console.log(name,password)
          
-         await fetch("http://localhost:3000/api/users",{method:"POST",headers:{  "Content-Type": "application/json"}, body: JSON.stringify({ name, password })})
+        const res= await fetch("http://localhost:3000/api/users",{method:"POST",headers:{  "Content-Type": "application/json"}, body: JSON.stringify({ name, password })})
 
          console.log("Data sended to backend")
+
+         
+          if (res.ok) {
+            router.push("/signin")
+          }
+
+       
 
       }
 
